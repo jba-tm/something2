@@ -25,7 +25,9 @@ const index_url = 'https://www.etoro.com/';
 const parse_url = 'https://www.etoro.com/sapi/trade-data-real/live/public/portfolios?cid=3378352';
 
 
-puppeteer.launch().then(async browser=>{
+puppeteer.launch({
+    // args: [ '--proxy-server=http://14.225.5.68/' ]
+}).then(async browser=>{
     const page = await browser.newPage();
     console.log("Set index.html headers")
     await page.setExtraHTTPHeaders(headers)
@@ -66,7 +68,8 @@ puppeteer.launch().then(async browser=>{
 
         console.log('go to with 20 times')
         console.log(`${i} time out 2 sec`)
-        await page.goto(parse_url,{waitUntil: 'networkidle0'} ).catch(err=>{
+        await page.goto(parse_url,{waitUntil: 'networkidle0'} )
+            .catch(err=>{
             console.log(err)})
         await page.waitForTimeout(3000)
         console.log(`write ${i}.html`)
